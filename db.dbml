@@ -6,9 +6,9 @@ Table Users {
   password_hash string
 }
 
-Table Adresses {
+Table Addresses {
   id int [pk]
-  user_id string [not null]
+  user_id string [not null, ref: > Users.user_id]
   city string [not null]
   street string [not null]
   house string [not null]
