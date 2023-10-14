@@ -1,0 +1,49 @@
+Table Users {
+  user_id int [pk] // Unique user identifier
+  first_name string
+  last_name string
+  email string
+  password_hash string
+}
+
+Table Pizzas {
+  pizza_id int [pk] // Unique pizza identifier
+  def_piz string [ref: > DefaultPizza.pizza_id] // Any pizza from DefaultPizza
+  fi_p string // 1 part of a DefaultPizza
+  s_p string // 2 part of a DefaultPizza
+  t_p string // 3 part of a DefaultPizza
+  fo_p string // 4 part of a DefaultPizza
+  total_cost decimal // Total cost of the pizza
+}
+
+Table DefaultPizza {
+  pizza_id int [pk] // Unique pizza identifier
+  name string
+  price decimal
+}
+
+
+Table Orders {
+  order_id int [pk] // Unique order identifier
+  user_id int [ref: > Users.user_id] // Reference to the user who placed the order
+  total_cost decimal // Total cost of the order
+  order_date datetime // Date and time of order creation
+  order_status string // e.g., "processing," "in delivery," "delivered"
+}
+
+Table OrderItems {
+  item_id int [pk] // Unique order item identifier
+  order_id int [ref: > Orders.order_id] // Reference to the order
+  pizza_id int [ref: > Pizzas.pizza_id] // Reference to the pizza included in the order
+  quantity int // Quantity of pizzas in the order
+}
+
+Table Promo_Codes {
+  promo_id int [pk] // Unique promo code identifier
+  code string [unique] // Unique promo code
+  discount_percentage int // Discount amount or percentage off the order
+  start_date datetime // Start date of code validity
+  end_date datetime // End date of code validity
+}
+
+// Relationships
