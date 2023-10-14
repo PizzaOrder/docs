@@ -1,9 +1,9 @@
 Table Users {
-  user_id int [pk] // Unique user identifier
-  first_name string
+  user_id int [pk]
+  first_name string [not null]
   last_name string
-  email string
-  password_hash string
+  email string [not null]
+  password_hash string [not null]
 }
 
 Table Addresses {
@@ -16,43 +16,41 @@ Table Addresses {
 }
 
 Table Pizzas {
-  pizza_id int [pk] // Unique pizza identifier
-  default_pizza_id string [ref: > DefaultPizza.pizza_id] // Any pizza from DefaultPizza
-  first_part string // 1 part of a DefaultPizza
-  second_part string // 2 part of a DefaultPizza
-  third_part string // 3 part of a DefaultPizza
-  fourth_part string // 4 part of a DefaultPizza
-  total_cost decimal // Total cost of the pizza
+  pizza_id int [pk] //
+  default_pizza_id string [ref: > DefaultPizza.pizza_id] // Любая пицца из DefaultPizza
+  first_part string
+  second_part string
+  third_part string
+  fourth_part string
+  total_cost decimal [not null]
 }
 
 Table DefaultPizza {
-  pizza_id int [pk] // Unique pizza identifier
-  name string
-  price decimal
+  pizza_id int [pk]
+  name string [not null]
+  price decimal [not null]
 }
 
 
 Table Orders {
-  order_id int [pk] // Unique order identifier
-  user_id int [ref: > Users.user_id] // Reference to the user who placed the order
-  total_cost decimal // Total cost of the order
-  order_date datetime // Date and time of order creation
-  order_status string // e.g., "processing," "in delivery," "delivered"
+  order_id int [pk]
+  user_id int [not null, ref: > Users.user_id]
+  total_cost decimal [not null] // Полная стоимость заказа
+  order_date datetime [not null]
+  order_status string [not null]
 }
 
 Table OrderItems {
-  item_id int [pk] // Unique order item identifier
-  order_id int [ref: > Orders.order_id] // Reference to the order
-  pizza_id int [ref: > Pizzas.pizza_id] // Reference to the pizza included in the order
-  quantity int // Quantity of pizzas in the order
+  item_id int [pk]
+  order_id int [not null, ref: > Orders.order_id]
+  pizza_id int [not null, ref: > Pizzas.pizza_id]
+  quantity int [not null]
 }
 
 Table Promo_Codes {
-  promo_id int [pk] // Unique promo code identifier
-  code string [unique] // Unique promo code
-  discount_percentage int // Discount amount or percentage off the order
-  start_date datetime // Start date of code validity
-  end_date datetime // End date of code validity
+  promo_id int [pk]
+  code string [unique, not null] // Промокод
+  discount_percentage int [not null]
+  start_date datetime [not null]
+  end_date datetime [not null]
 }
-
-// Relationships
