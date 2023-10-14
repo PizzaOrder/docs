@@ -6,13 +6,22 @@ Table Users {
   password_hash string
 }
 
+Table Adresses {
+  id int [pk]
+  user_id string [not null]
+  city string [not null]
+  street string [not null]
+  house string [not null]
+  apartment string
+}
+
 Table Pizzas {
   pizza_id int [pk] // Unique pizza identifier
-  def_piz string [ref: > DefaultPizza.pizza_id] // Any pizza from DefaultPizza
-  fi_p string // 1 part of a DefaultPizza
-  s_p string // 2 part of a DefaultPizza
-  t_p string // 3 part of a DefaultPizza
-  fo_p string // 4 part of a DefaultPizza
+  default_pizza_id string [ref: > DefaultPizza.pizza_id] // Any pizza from DefaultPizza
+  first_part string // 1 part of a DefaultPizza
+  second_part string // 2 part of a DefaultPizza
+  third_part string // 3 part of a DefaultPizza
+  fourth_part string // 4 part of a DefaultPizza
   total_cost decimal // Total cost of the pizza
 }
 
