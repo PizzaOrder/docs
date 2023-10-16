@@ -1,24 +1,3 @@
-Table PrebuiltPizzas {
-  pizza_id int [pk]
-  default_pizza_id string [ref: > DefaultPizza.pizza_id]
-  total_cost decimal [not null]
-}
-
-Table CustomPizzas {
-  pizza_id int [pk]
-  first_part string
-  second_part string
-  third_part string
-  fourth_part string
-  total_cost decimal [not null]
-}
-
-Table DefaultPizza {
-  pizza_id int [pk]
-  name string [not null]
-  price decimal [not null]
-}
-
 Table Users {
   user_id int [pk]
   first_name string [not null]
@@ -29,12 +8,20 @@ Table Users {
 
 Table Addresses {
   id int [pk]
-  user_id string [not null, ref: > Users.user_id]
+  user_id int [not null, ref: > Users.user_id]
   city string [not null]
   street string [not null]
   house string [not null]
   apartment string
 }
+
+
+Table DefaultPizza {
+  pizza_id int [pk]
+  name string [not null]
+  price decimal [not null]
+}
+
 
 Table Orders {
   order_id int [pk]
@@ -47,8 +34,7 @@ Table Orders {
 Table OrderItems {
   item_id int [pk]
   order_id int [not null, ref: > Orders.order_id]
-  prebuilt_pizza_id int [ref: > PrebuiltPizzas.pizza_id]
-  custom_pizza_id int [ref: > CustomPizzas.pizza_id]
+  pizza_id int [not null, ref: > DefaultPizza.pizza_id]
   quantity int [not null]
 }
 
