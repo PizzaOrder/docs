@@ -1,3 +1,24 @@
+Table PrebuiltPizzas {
+  pizza_id int [pk]
+  default_pizza_id string [ref: > DefaultPizza.pizza_id]
+  total_cost decimal [not null]
+}
+
+Table CustomPizzas {
+  pizza_id int [pk]
+  first_part string
+  second_part string
+  third_part string
+  fourth_part string
+  total_cost decimal [not null]
+}
+
+Table DefaultPizza {
+  pizza_id int [pk]
+  name string [not null]
+  price decimal [not null]
+}
+
 Table Users {
   user_id int [pk]
   first_name string [not null]
@@ -15,23 +36,6 @@ Table Addresses {
   apartment string
 }
 
-Table Pizzas {
-  pizza_id int [pk] //
-  default_pizza_id string [ref: > DefaultPizza.pizza_id] // Любая пицца из DefaultPizza
-  first_part string
-  second_part string
-  third_part string
-  fourth_part string
-  total_cost decimal [not null]
-}
-
-Table DefaultPizza {
-  pizza_id int [pk]
-  name string [not null]
-  price decimal [not null]
-}
-
-
 Table Orders {
   order_id int [pk]
   user_id int [not null, ref: > Users.user_id]
@@ -43,9 +47,11 @@ Table Orders {
 Table OrderItems {
   item_id int [pk]
   order_id int [not null, ref: > Orders.order_id]
-  pizza_id int [not null, ref: > Pizzas.pizza_id]
+  prebuilt_pizza_id int [ref: > PrebuiltPizzas.pizza_id]
+  custom_pizza_id int [ref: > CustomPizzas.pizza_id]
   quantity int [not null]
 }
+
 
 Table Promo_Codes {
   promo_id int [pk]
